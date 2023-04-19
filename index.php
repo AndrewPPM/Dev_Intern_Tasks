@@ -1,9 +1,12 @@
 <?php
+include "connection.php";
+    
 
-    $connection=mysqli_connect("localhost","root","","GuestHouseDB") or die("could not Connect!<br>Error Returned By MySQL server:".mysqli_connect_error());
-
-    if($connection){
-      echo "Connection is Sucessful";
+    if(!$connection){
+      echo "Could not Connect!<br>Error Returned By MySQL server:".mysqli_connect_error();
+    
     }
-    mysql_close($connection);
+    echo "Connection is Succesful";
+
+    mysqli_close($connection);
 ?>
