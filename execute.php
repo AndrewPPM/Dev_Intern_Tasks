@@ -7,7 +7,7 @@ $email = $_POST["email"];
 $mobile = $_POST["mobile"];
 
 if ($first_name == '' || $last_name == '' || $email == '' || $mobile == '') {
-  header("Location: form.php");
+  header("Location: add_guest.php");
 } 
 // Insert data into database
 $sql = "INSERT INTO GuestDetails (first_name, lastname, email, mobile, enrolled_date) 
