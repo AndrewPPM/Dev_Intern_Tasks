@@ -1,4 +1,3 @@
-Copy code
 <?php
 include "connection.php";
 
@@ -27,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($
 session_start();
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     // Show the login form if the user is not logged in
+}
 ?>
 
 <!DOCTYPE html>
