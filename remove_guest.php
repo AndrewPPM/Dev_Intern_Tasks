@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contact Details</title> 
+    <title>Remove Guest</title> 
     <meta charset="UTF-8">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
 </head>
 <body>
 
-    <h1>Contact Details</h1>
+<?php
+include "connection.php";
 
-    <form action="index.php" method="post">
-        <label for="name">First Name</label>
-        <input type="text" id="name" name="first_name">
+$id = $_POST["id"];
 
-        <label for="name">Last Name</label>
-        <input type="text" id="name" name="last_name">
+// Get first name of the deleted record
+$sql = "SELECT first_name FROM GuestDetails WHERE id='$id'";
+$result = $connection->query($sql);
+$row = $result->fetch_assoc();
+$first_name = $row["first_name"];
 
-        <label for="name">Email</label>
-        <input type="text" id="name" name="email">
+// Delete record from database
+$sql = "DELETE FROM GuestDetails WHERE id='$id'";
+if (mysqli_query($connection, $sql)) {
+    echo "<h1>'$first_name' removed successfully.</h1>";
+} else {
+    echo "Error deleting record: " . mysqli_error($connection);
+}
 
-        <label for="name">Mobile</label>
-        <input type="text" id="name" name="mobile">
+// Close connection
+mysqli_close($connection);
+?>
 
-        <button>Submit</button>
-    </form>
+<form action="index.php">
+    <button type="submit">Return to Guest List</button>
+</form>
+
 </body>
 </html>

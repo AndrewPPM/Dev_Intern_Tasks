@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contact Details</title> 
+    <title>Add Guest</title> 
     <meta charset="UTF-8">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
 </head>
 <body>
 
-    <h1>Contact Details</h1>
+    <h1>Add Guest</h1>
 
-    <form action="execute.php" method="post">
+    <form action="save_guest.php" method="post">
         <label for="name">First Name</label>
-        <input type="text" id="name" name="first_name">
+        <input type="text" id="first_name" name="first_name">
 
         <label for="name">Last Name</label>
-        <input type="text" id="name" name="last_name">
+        <input type="text" id="last_name" name="last_name">
 
         <label for="name">Email</label>
-        <input type="text" id="name" name="email">
+        <input type="text" id="email" name="email">
 
         <label for="name">Mobile</label>
-        <input type="text" id="name" name="mobile">
+        <input type="text" id="mobile" name="mobile">
 
-        <button>Submit</button>
+        <button type="submit" name="submit">Submit</button>
+         
     </form>
 </body>
 </html>
