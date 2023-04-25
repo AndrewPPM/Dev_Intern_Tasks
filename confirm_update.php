@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    // User is not logged in, redirect to login page
+    header('Location: login.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +20,7 @@
     include "connection.php";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id = $_POST["id"];
+        $id = $_POST["id"] ?? $_GET["id"];
         $first_name = $_POST["first_name"];
         $last_name = $_POST["last_name"];
         $email = $_POST["email"];
@@ -31,15 +40,6 @@
 <p>Last Name: <?php echo $row["lastname"]; ?></p>
 <p>Email: <?php echo $row["email"]; ?></p>
 <p>Mobile: <?php echo $row["mobile"]; ?></p>
-
-<form action="update_guest.php" method="post">
-    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-    <input type="hidden" name="first_name" value="<?php echo $row['first_name']; ?>">
-    <input type="hidden" name="last_name" value="<?php echo $row['lastname']; ?>">
-    <input type="hidden" name="email" value="<?php echo $row['email']; ?>">
-    <input type="hidden" name="mobile" value="<?php echo $row['mobile']; ?>">
-    <button type="submit">Edit</button>
-</form>
 
 <form action="index.php">
     <button type="submit">Return to Guest List</button>

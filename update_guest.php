@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    // User is not logged in, redirect to login page
+    header('Location: login.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +17,10 @@
 <body>
 
 <?php
+
+// Display Details to be edited of user selected.
+// Fix confirm_update to display changed details.
+
 include "connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,9 +37,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Retrieve record from database
 $id = $_GET["id"];
+
+// Check if id is empty or not a number
+if (empty($id) || !is_numeric($id)) {
+    echo "Invalid id";
+    exit;
+}
+
 $sql = "SELECT * FROM GuestDetails WHERE id='$id'";
 $result = mysqli_query($connection, $sql);
+
+// Debug statement to print the value of $sql
+echo "SQL query: " . $sql . "<br>";
+
+// Check if query was successful and returned a row
+if (!$result || mysqli_num_rows($result) == 0) {
+    echo "Record not found";
+    exit;
+}
+
 $row = mysqli_fetch_assoc($result);
+
+// Check if the row was fetched successfully
+if (!$row) {
+    echo "Error: could not fetch row";
+    exit;
+}
+
 ?>
 
 <h1>Update Guest</h1>
@@ -38,10 +75,6 @@ $row = mysqli_fetch_assoc($result);
     Email: <input type="email" name="email" value="<?php echo $row['email']; ?>"><br><br>
     Mobile: <input type="text" name="mobile" value="<?php echo $row['mobile']; ?>"><br><br>
     <button type="submit">Update</button>
-</form>
-
-<form action="index.php">
-    <button type="submit">Return to Guest List</button>
 </form>
 
 <?php

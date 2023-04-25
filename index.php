@@ -1,7 +1,20 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    // User is not logged in, redirect to login page
+    header('Location: login.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Guest List</title> 
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://cdn.statically.io/gh/HoangTuan110/subreply-css/main/subreply.css">
     <style type="text/css">
         table{
             border-collapse: collapse;
@@ -18,19 +31,51 @@
             right: 0;
             margin: 10px;
         }
+        /* New style for the add button */
+        .add_button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: green;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        /* New style for the edit button */
+        .edit_button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: blue;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        /* New style for the delete button */
+        .delete_button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: red;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+
     </style>
-    <meta charset="UTF-8">
-    <link rel="stylesheet"
-          href="https://cdn.statically.io/gh/HoangTuan110/subreply-css/main/subreply.css">
 </head>
 <body>
     <h1>Guest List</h1>
     <div id="addButtonContainer">
         <form action='add_guest.php' method='post'>
             <input type='hidden' name='id'>
-            <button type='submit'>Add</button>
+            <button type='submit' class='add_button'>Add</button>
         </form>
     </div>
+    <form action="logout.php" method="post">
+        <button type="submit">Logout</button>
+    </form>
 
 <?php
 include "connection.php";
@@ -80,10 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>
                     <td>
-                        <form action='update_guest.php' method='post'>
-                            <input type='hidden' name='id' value='" . $row["id"] . "'>
-                            <button type='submit'>Edit</button>
-                        </form>
+                        <a href='update_guest.php?id=".$row["id"]."' class='edit_button'>Edit</a>
                     </td>
                     <td>" . $row["id"] . "</td>
                     <td>" . $row["first_name"] . "</td>
@@ -94,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td>
                         <form action='remove_guest.php' method='post'>
                             <input type='hidden' name='id' value='" . $row["id"] . "'>
-                            <button type='submit'>Delete</button>
+                            <button type='submit' class='delete_button'>Delete</button>
                         </form>
                     </td>
                 </tr>";

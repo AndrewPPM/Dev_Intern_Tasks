@@ -1,7 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// Start session management
+session_start();
 
 // Include the connection file to connect to the database
 include 'connection.php';
@@ -13,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = mysqli_real_escape_string($connection, $_POST['password']);
 
     // Execute a SELECT query to retrieve the user's data from the database
-    $query = "SELECT * FROM Users WHERE username = '$username'";
+    $query = "SELECT * FROM Users WHERE username = '$username' AND `password` = '$password'";
     $result = mysqli_query($connection, $query);
 
     // Check if the username exists in the database
@@ -21,20 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Retrieve the user's data from the database
         $row = mysqli_fetch_assoc($result);
 
-        // Check if the password matches
-        if (password_verify($password, $row['password'])) {
-            // Login successful, redirect to index.php
-            header('Location: index.php');
-            exit();
-        } else {
-            // Login failed, show an error message
-            echo "Entered password: $password <br>";
-            echo "Stored password: {$row['password']} <br>";
-            $error = 'Invalid password.';
-        }
+        // Store the user's ID in the session
+        $_SESSION['user_id'] = $row['id'];
+
+        // Redirect to index.php
+        header('Location: index.php');
+        exit();
     } else {
         // Login failed, show an error message
-        $error = 'Invalid username.';
+        $error = 'Invalid username or password.';
     }
 }
 
