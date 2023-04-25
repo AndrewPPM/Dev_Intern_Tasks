@@ -1,50 +1,5 @@
-<?php
-include "connection.php";
-
-// Check if the user has submitted login credentials
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    // Query the database for the entered username and password
-    $stmt = $connection->prepare("SELECT id FROM Users WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        // Store the user session
-        session_start();
-        $_SESSION["loggedin"] = true;
-        $_SESSION["username"] = $username;
-    } else {
-        echo "Invalid username or password.";
-    }
-}
-
-// Check if the user is logged in
-session_start();
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    // Show the login form if the user is not logged in
-}
-?>
-
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Login</title> 
-</head>
-<body>
-    <h1>Login</h1>
-    <form method="post">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-
 <head>
     <title>Guest List</title> 
     <style type="text/css">
@@ -78,6 +33,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </div>
 
 <?php
+include "connection.php";
 
 $first_name = $_POST["first_name"];
 $last_name = $_POST["last_name"];
