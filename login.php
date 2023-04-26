@@ -8,30 +8,42 @@ include 'connection.php';
 // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the username and password from the form
-    $username = mysqli_real_escape_string($connection, $_POST['username']);
-    $password = mysqli_real_escape_string($connection, $_POST['password']);
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    // Execute a SELECT query to retrieve the user's data from the database
-    $query = "SELECT * FROM Users WHERE username = '$username' AND `password` = '$password'";
-    $result = mysqli_query($connection, $query);
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Prepare a SELECT query to retrieve the user's data from the database
+    $stmt = mysqli_prepare($connection, "SELECT * FROM Users WHERE username = ?");
+    mysqli_stmt_bind_param($stmt, 's', $username);
+    mysqli_stmt_execute($stmt);
+
+    // Fetch the result of the query
+    $result = mysqli_stmt_get_result($stmt);
 
     // Check if the username exists in the database
     if (mysqli_num_rows($result) == 1) {
         // Retrieve the user's data from the database
         $row = mysqli_fetch_assoc($result);
 
-        // Store the user's ID in the session
-        $_SESSION['user_id'] = $row['id'];
+        // Verify the password
+        if (password_verify($password, $row['password'])) {
+            // Store the user's ID in the session
+            $_SESSION['user_id'] = $row['id'];
 
-        // Redirect to index.php
-        header('Location: index.php');
-        exit();
+            // Redirect to index.php
+            header('Location: index.php');
+            exit();
+        } else {
+            // Login failed, show an error message
+            $error = 'Invalid password.';
+        }
     } else {
         // Login failed, show an error message
-        $error = 'Invalid username or password.';
+        $error = 'Invalid username.';
     }
 }
-
 ?>
 
 <!DOCTYPE html>
