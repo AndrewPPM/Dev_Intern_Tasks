@@ -1,4 +1,5 @@
 <?php
+// Session management
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -23,6 +24,7 @@ if (!isset($_SESSION['user_id'])) {
 
 include "connection.php";
 
+// Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $first_name = $_POST['first_name'];
@@ -46,9 +48,6 @@ if (empty($id) || !is_numeric($id)) {
 
 $sql = "SELECT * FROM GuestDetails WHERE id='$id'";
 $result = mysqli_query($connection, $sql);
-
-// Debug statement to print the value of $sql
-echo "SQL query: " . $sql . "<br>";
 
 // Check if query was successful and returned a row
 if (!$result || mysqli_num_rows($result) == 0) {

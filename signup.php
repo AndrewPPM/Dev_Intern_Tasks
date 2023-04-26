@@ -1,9 +1,6 @@
 <?php
 include 'connection.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }

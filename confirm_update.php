@@ -1,4 +1,5 @@
 <?php
+// Session management
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -19,6 +20,7 @@ if (!isset($_SESSION['user_id'])) {
 <?php
     include "connection.php";
 
+    // Check if the form was submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST["id"] ?? $_GET["id"];
         $first_name = $_POST["first_name"];
