@@ -6,10 +6,12 @@ session_start();
 include 'connection.php';
 
 // Check if the form has been submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Check if the form has been submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password'])) {
     // Get the username and password from the form
     $username = $_POST['username'];
     $password = $_POST['password'];
+
 
     // Hash the password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);

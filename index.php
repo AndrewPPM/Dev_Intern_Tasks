@@ -81,10 +81,12 @@ if (!isset($_SESSION['user_id'])) {
 <?php
 include "connection.php";
 
-$first_name = $_POST["first_name"];
-$last_name = $_POST["last_name"];
-$email = $_POST["email"];
-$mobile = $_POST["mobile"];
+if (isset($first_name) || isset($last_name) || isset($email) || isset($mobile)) {
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $email = $_POST["email"];
+    $mobile = $_POST["mobile"];
+}
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -135,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td>" . $row["mobile"] . "</td>
                     <td>" . $row["enrolled_date"] . "</td>
                     <td>
-                        <form action='remove_guest.php' method='post'>
+                        <form action='confirm_removal.php' method='post'>
                             <input type='hidden' name='id' value='" . $row["id"] . "'>
                             <button type='submit' class='delete_button'>Delete</button>
                         </form>

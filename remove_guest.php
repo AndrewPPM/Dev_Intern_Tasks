@@ -8,31 +8,26 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Remove Guest</title> 
+    <title>Confirm Guest Removal</title> 
     <meta charset="UTF-8">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.min.css">
 </head>
 <body>
-
 <?php
 include "connection.php";
 
-$id = $_POST["id"];
-
-// Get first name of the deleted record
-$sql = "SELECT first_name FROM GuestDetails WHERE id='$id'";
-$result = $connection->query($sql);
-$row = $result->fetch_assoc();
-$first_name = $row["first_name"];
+$id = $_GET["id"];
 
 // Delete record from database
 $sql = "DELETE FROM GuestDetails WHERE id='$id'";
+
 if (mysqli_query($connection, $sql)) {
-    echo "<h1>'$first_name' removed successfully.</h1>";
+    echo "<h1>Guest removed successfully.</h1>";
 } else {
     echo "Error deleting record: " . mysqli_error($connection);
 }
@@ -42,7 +37,7 @@ mysqli_close($connection);
 ?>
 
 <form action="index.php">
-    <button type="submit">Return to Guest List</button>
+    <button type="submit">Home</button>
 </form>
 
 </body>
