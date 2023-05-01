@@ -1,12 +1,10 @@
 <?php
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    // User is not logged in, redirect to login page
-    header('Location: login.php');
-    exit();
-}
+include "connection.php";
+include "username_logout.php";
+
 ?>
+
 <!DOCTYPE html>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form action="index.php" method="post">
         <input type="hidden" name="first_name" value="<?php echo $_POST['first_name']; ?>">
-        <input type="hidden" name="last_name" value="<?php echo $_POST['last_name']; ?>">
+        <input type="hidden" name="lastname" value="<?php echo $_POST['lastname']; ?>">
         <input type="hidden" name="email" value="<?php echo $_POST['email']; ?>">
         <input type="hidden" name="mobile" value="<?php echo $_POST['mobile']; ?>">
         <button type="submit">Home</button>

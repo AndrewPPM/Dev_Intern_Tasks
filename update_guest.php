@@ -1,13 +1,10 @@
 <?php
-// Session management
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    // User is not logged in, redirect to login page
-    header('Location: login.php');
-    exit();
-}
+include "connection.php";
+include "username_logout.php";
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +25,7 @@ include "connection.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
+    $last_name = $_POST['lastname'];
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
 
@@ -70,7 +67,7 @@ if (!$row) {
 <form action="confirm_update.php" method="post">
     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
     First Name: <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>"><br><br>
-    Last Name: <input type="text" name="last_name" value="<?php echo $row['lastname']; ?>"><br><br>
+    Last Name: <input type="text" name="lastname" value="<?php echo $row['lastname']; ?>"><br><br>
     Email: <input type="email" name="email" value="<?php echo $row['email']; ?>"><br><br>
     Mobile: <input type="text" name="mobile" value="<?php echo $row['mobile']; ?>"><br><br>
     <button type="submit">Update</button>

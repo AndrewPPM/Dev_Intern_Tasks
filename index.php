@@ -1,13 +1,10 @@
 <?php
-// Session management
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    // User is not logged in, redirect to login page
-    header('Location: login.php');
-    exit();
-}
+include "connection.php";
+include "username_logout.php";
+
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -28,7 +25,7 @@ if (!isset($_SESSION['user_id'])) {
         /* New style to position the "Add" button */
         #addButtonContainer {
             position: absolute;
-            top: 0;
+            top: 30;
             right: 0;
             margin: 10px;
         }
@@ -74,16 +71,12 @@ if (!isset($_SESSION['user_id'])) {
             <button type='submit' class='add_button'>Add</button>
         </form>
     </div>
-    <form action="logout.php" method="post">
-        <button type="submit">Logout</button>
-    </form>
 
 <?php
-include "connection.php";
 
 if (isset($first_name) || isset($last_name) || isset($email) || isset($mobile)) {
     $first_name = $_POST["first_name"];
-    $last_name = $_POST["last_name"];
+    $last_name = $_POST["lastname"];
     $email = $_POST["email"];
     $mobile = $_POST["mobile"];
 }
@@ -91,7 +84,7 @@ if (isset($first_name) || isset($last_name) || isset($email) || isset($mobile)) 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = $_POST["first_name"];
-    $last_name = $_POST["last_name"];
+    $last_name = $_POST["lastname"];
     $email = $_POST["email"];
     $mobile = $_POST["mobile"];
 

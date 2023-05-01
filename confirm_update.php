@@ -1,13 +1,10 @@
 <?php
-// Session management
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    // User is not logged in, redirect to login page
-    header('Location: login.php');
-    exit();
-}
+include "connection.php";
+include "username_logout.php";
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +15,12 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
 <?php
-    include "connection.php";
 
     // Check if the form was submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST["id"] ?? $_GET["id"];
         $first_name = $_POST["first_name"];
-        $last_name = $_POST["last_name"];
+        $last_name = $_POST["lastname"];
         $email = $_POST["email"];
         $mobile = $_POST["mobile"];
         

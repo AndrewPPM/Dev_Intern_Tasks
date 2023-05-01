@@ -1,12 +1,8 @@
 <?php
-// Session management
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    // User is not logged in, redirect to login page
-    header('Location: login.php');
-    exit();
-}
+include "connection.php";
+include "username_logout.php";
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +21,7 @@ if (!isset($_SESSION['user_id'])) {
         <input type="text" id="first_name" name="first_name">
 
         <label for="name">Last Name</label>
-        <input type="text" id="last_name" name="last_name">
+        <input type="text" id="lastname" name="lastname">
 
         <label for="name">Email</label>
         <input type="text" id="email" name="email">

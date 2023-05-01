@@ -1,13 +1,10 @@
 <?php
-// Session Management
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    // User is not logged in, redirect to login page
-    header('Location: login.php');
-    exit();
-}
+include "connection.php";
+include "username_logout.php";
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +16,6 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 
 <?php
-include "connection.php";
 
 $id = $_POST["id"];
 
@@ -28,10 +24,10 @@ $sql = "SELECT * FROM GuestDetails WHERE id='$id'";
 $result = $connection->query($sql);
 $row = $result->fetch_assoc();
 $id = $_POST["id"];
-$first_name = $row["first_name"];
-$last_name = $row["lastname"];
-$email = $row["email"];
-$mobile = $row["mobile"];
+$first_name = isset($row["first_name"]) ? $row["first_name"] : '';
+$last_name = isset($row["lastname"]) ? $row["lastname"] : '';
+$email = isset($row["email"]) ? $row["email"] : '';
+$mobile = isset($row["mobile"]) ? $row["mobile"] : '';
 
 // Display guest to be deleted
 if (mysqli_query($connection, $sql)) {
@@ -46,10 +42,10 @@ mysqli_close($connection);
 
 <form action="remove_guest.php">
     <input type="hidden" name="id" value="<?php echo $_POST['id']; ?>">
-    <input type="hidden" name="first_name" value="<?php echo $_POST['first_name']; ?>">
-    <input type="hidden" name="last_name" value="<?php echo $_POST['last_name']; ?>">
-    <input type="hidden" name="email" value="<?php echo $_POST['email']; ?>">
-    <input type="hidden" name="mobile" value="<?php echo $_POST['mobile']; ?>">
+    <input type="hidden" name="first_name" value="<?php echo $first_name; ?>">
+    <input type="hidden" name="lastname" value="<?php echo $last_name; ?>">
+    <input type="hidden" name="email" value="<?php echo $email; ?>">
+    <input type="hidden" name="mobile" value="<?php echo $mobile; ?>">
     <button type="submit">Confirm</button>
 </form>
 <form action="index.php">
