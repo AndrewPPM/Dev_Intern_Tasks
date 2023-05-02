@@ -1,7 +1,6 @@
 <?php
 
-include "connection.php";
-include "username_logout.php";
+include "connection_session.php";
 
 ?>
 <!DOCTYPE html>
