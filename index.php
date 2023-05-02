@@ -99,50 +99,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
     
-    // Database select to show table
-    $sql = "SELECT id, first_name, lastname, email, mobile, enrolled_date FROM GuestDetails";
-    $result = $connection->query($sql);
+// Database select to show table
+$sql = "SELECT id, first_name, lastname, email, mobile, enrolled_date FROM GuestDetails";
+$result = $connection->query($sql);
 
-    if ($result->num_rows > 0) {
-        // Table header
-        echo "<table>
-                <tr>
-                    <th>Edit</th>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th>Enrolled Date</th>
-                    <th>Delete</th>
-                </tr>";
+if ($result->num_rows > 0) {
+    // Table header
+    echo "<table>
+            <tr>
+                <th>Edit</th>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Enrolled Date</th>
+                <th>Delete</th>
+            </tr>";
 
-        // Table rows
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>
-                    <td>
-                        <a href='update_guest.php?id=".$row["id"]."' class='edit_button'>Edit</a>
-                    </td>
-                    <td>" . $row["id"] . "</td>
-                    <td>" . $row["first_name"] . "</td>
-                    <td>" . $row["lastname"] . "</td>
-                    <td>" . $row["email"] . "</td>
-                    <td>" . $row["mobile"] . "</td>
-                    <td>" . $row["enrolled_date"] . "</td>
-                    <td>
-                        <form action='confirm_removal.php' method='post'>
-                            <input type='hidden' name='id' value='" . $row["id"] . "'>
-                            <button type='submit' class='delete_button'>Delete</button>
-                        </form>
-                    </td>
-                </tr>";
-        }
-
-        // Close table
-        echo "</table>";
-    } else {
-        echo "0 results";
+    // Table rows
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>
+                    <a href='update_guest.php?id=".$row["id"]."' class='edit_button'>Edit</a>
+                </td>
+                <td>" . $row["id"] . "</td>
+                <td>" . $row["first_name"] . "</td>
+                <td>" . $row["lastname"] . "</td>
+                <td>" . $row["email"] . "</td>
+                <td>" . $row["mobile"] . "</td>
+                <td>" . $row["enrolled_date"] . "</td>
+                <td>
+                    <form action='confirm_removal.php' method='post'>
+                        <input type='hidden' name='id' value='" . $row["id"] . "'>
+                        <button type='submit' class='delete_button'>Delete</button>
+                    </form>
+                </td>
+            </tr>";
     }
+
+    // Close table
+    echo "</table>";
+} else {
+    echo "0 results";
+}
 
 
     
