@@ -15,9 +15,6 @@ include "connection_session.php";
 
 <?php
 
-// Display Details to be edited of user selected.
-// Fix confirm_update to display changed details.
-
 include "connection.php";
 
 // Check if the form was submitted

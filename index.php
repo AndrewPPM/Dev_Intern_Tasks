@@ -73,6 +73,7 @@ include "connection_session.php";
 
 <?php
 
+// Removing undefined arrays
 if (isset($first_name) || isset($last_name) || isset($email) || isset($mobile)) {
     $first_name = $_POST["first_name"];
     $last_name = $_POST["lastname"];

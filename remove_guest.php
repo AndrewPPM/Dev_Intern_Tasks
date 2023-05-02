@@ -21,6 +21,7 @@ $id = $_GET["id"];
 // Delete record from database
 $sql = "DELETE FROM GuestDetails WHERE id='$id'";
 
+// Display message weather the request was successful or not
 if (mysqli_query($connection, $sql)) {
     echo "<h1>Guest removed successfully.</h1>";
 } else {
